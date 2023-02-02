@@ -1,0 +1,32 @@
+module cntb();
+  wire[1:0] cnt;
+  reg clk,rst;
+  mod2cnt DUT(cnt,clk,rst);
+    initial
+    begin
+      $monitor($time,"value of cnt=%0d",cnt);
+    end
+  initial
+    begin
+      clk=0;
+      forever 
+        #5clk=~clk;
+    end
+  initial
+    begin
+      rst=1;
+      forever
+       #20rst=~rst;
+    end
+
+  initial
+    begin
+      #200;$finish;
+    end
+  initial
+    begin
+      $dumpfile("dunp.vcd");
+      $dumpvars();
+    end
+  
+endmodule
