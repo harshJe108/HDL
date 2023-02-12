@@ -1,0 +1,5 @@
+interface intf;
+  logic a,b;
+  logic cin;
+  logic sum,carry;
+endinterface
