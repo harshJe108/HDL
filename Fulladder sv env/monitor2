@@ -1,0 +1,23 @@
+class monitor2;
+  packet pack;
+  virtual intf vif;
+  mailbox mon2sco;
+  function new( virtual intf vif,mailbox mon2sco);
+    this.vif= vif;
+    this.mon2sco=mon2sco;
+  endfunction
+  task main();
+    #3
+    repeat(1);
+    begin
+      pack=new();
+      pack.a=vif.a;
+      pack.b=vif.b;
+      pack.cin=vif.cin;
+      pack.sum=vif.sum;
+      pack.carry=vif.carry;
+      pack.display("monitor2");
+      mon2sco.put(pack);
+    end
+  endtask
+endclass
