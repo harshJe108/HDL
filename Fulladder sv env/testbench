@@ -1,0 +1,12 @@
+`include "interface"
+`include "test"
+module fulladdtb();
+  intf a_intf();
+  test t1(a_intf);
+  fulladd DUT(.sum(a_intf.sum), .carry(a_intf.carry), .a(a_intf.a), .b(a_intf.b), .cin(a_intf.cin));
+  initial
+    begin
+      $dumpfile("count.vcd");
+      $dumpvars();
+    end
+endmodule
