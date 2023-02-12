@@ -1,0 +1,13 @@
+class packet;
+  rand bit a,b;
+  rand bit cin;
+  bit sum;
+  bit carry;
+  function void display(string name);
+    $display("=========================");
+    $display("%s",name);
+    $display("For a=%d, b=%d, and cin=%d",a,b,cin);
+    $display("sum= %d and carry=%d",sum,carry);
+    $display("=========================");
+  endfunction
+endclass
