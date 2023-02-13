@@ -1,0 +1,3 @@
+interface intf(input logic clk, rst);
+  logic[1:0] cnt;
+endinterface
