@@ -1,0 +1,16 @@
+`include "interface"
+`include "test"
+module mod2countertb();
+  bit clk;
+  bit rst;
+  always #1clk=~clk;
+  always #5rst=~rst;
+  intf a_intf(clk,rst);
+  test t1(a_intf);
+  mod2counter DUT(.cnt(a_intf.cnt), .clk(a_intf.clk), .rst(a_intf.rst));
+  initial
+    begin
+      $dumpfile("count.vcd");
+      $dumpvars();
+    end
+endmodule
