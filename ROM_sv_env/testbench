@@ -1,0 +1,21 @@
+`include "interface_"
+`include "test"
+module memtb();
+  bit clk;
+  always #1clk=~clk;
+  
+  intf a_intf(clk);
+  test t1(a_intf);
+  
+  memory4x4 DUT(.dout(a_intf.dout), .din(a_intf.din),.addr(a_intf.addr),.WE(a_intf.WE),.clk(a_intf.clk));
+  
+  initial
+    begin
+      #1000; $finish;
+      end
+  initial
+    begin
+      $dumpfile("dump.vcd");
+      $dumpvars();
+    end
+endmodule
