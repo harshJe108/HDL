@@ -1,0 +1,14 @@
+class packet;
+  rand bit WE;
+  rand bit[3:0] din;
+  rand bit[1:0] addr;
+  bit[3:0] dout;
+  constraint bb{addr!=0;};
+  function void display(string name);
+    $display("%s",name);
+    $display("=======================");
+    $display("for addr= %0d, when WE=%0b, dout=%0b",addr,WE,dout);
+    $display("din= %0b",din);
+    $display("===========");
+  endfunction
+endclass
