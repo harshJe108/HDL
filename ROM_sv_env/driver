@@ -1,0 +1,21 @@
+class driver;
+  packet pack;
+  mailbox gen2drive;
+  virtual intf vif;
+  function new(virtual intf vif, mailbox gen2drive);
+    this.vif=vif;
+    this.gen2drive=gen2drive;
+  endfunction
+  task main();
+    repeat(1)
+      begin
+        pack=new();
+    	gen2drive.get(pack);
+    	vif.addr<=pack.addr;
+        vif.din<=pack.din;
+        vif.WE<=pack.WE;
+        pack.dout=vif.dout;
+        pack.display("driver");
+      end
+  endtask
+endclass
