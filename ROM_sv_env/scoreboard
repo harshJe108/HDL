@@ -1,0 +1,27 @@
+class scoreboard;
+  packet pack;
+  mailbox ref2sco;
+  mailbox mon2ref;
+  bit[3:0] dout;
+  function new(mailbox mon2ref, mailbox ref2sco);
+    this.mon2ref=mon2ref;
+    this.ref2sco=ref2sco;
+  endfunction
+  task main();
+    begin
+      
+    	repeat(1)
+      begin
+        pack=new();
+        ref2sco.get(dout);
+        mon2ref.get(pack);
+        
+        if(dout==pack.dout)
+            $display("right result",$time);
+        else
+          $error("wrong result",$time);
+        pack.display("scoreboard");
+      end
+    end
+  endtask
+endclass
