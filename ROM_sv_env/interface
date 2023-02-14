@@ -1,0 +1,6 @@
+interface intf(input logic clk);
+  logic[3:0] dout;
+  logic[1:0] addr;
+  logic[3:0] din;
+  logic WE;
+endinterface
