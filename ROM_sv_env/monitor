@@ -1,0 +1,22 @@
+class monitor;
+  virtual intf vif;
+  mailbox mon2ref;
+  packet pack;
+  function new(virtual intf vif,mailbox mon2ref);
+    this.vif=vif;
+    this.mon2ref=mon2ref;
+  endfunction
+  task main();
+    #3
+    repeat(1)
+      begin
+        pack=new();
+        pack.addr=vif.addr;
+        pack.din=vif.din;
+        pack.WE=vif.WE;
+        pack.dout=vif.dout;
+        mon2ref.put(pack);
+        pack.display("monitor");
+      end
+  endtask
+endclass
