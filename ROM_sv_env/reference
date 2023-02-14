@@ -1,0 +1,44 @@
+class reference;
+  packet pack;
+  mailbox mon2ref;
+  mailbox ref2sco;
+  bit[3:0] dout;
+  bit[1:0] addr;
+  bit[3:0] din;
+  bit WE;
+  bit[3:0]rw[0:3];
+  virtual intf vif;
+  function new(virtual intf vif, mailbox mon2ref, mailbox ref2sco);
+    this.vif=vif;
+    this.mon2ref=mon2ref;
+    this.ref2sco=ref2sco;
+  endfunction
+  task main();
+    repeat(1)
+      begin
+        rw[0]=4'b1010;
+	    rw[1]=4'b1110;
+      	rw[2]=4'b0110;
+      	rw[3]=4'b1111;
+        pack=new();
+        mon2ref.peek(pack);
+        dout=pack.dout;
+        din=pack.din;
+        addr=pack.addr;
+        WE=pack.WE;
+        @(posedge vif.clk)
+        begin
+          if(WE)
+            rw[addr]=din;
+          else
+            dout=rw[addr];
+        end
+       // dout=dout;               
+        ref2sco.put(dout);
+        $display("%s","reference model");
+        $display("=================");
+        $display("for address=%d, and WE=%b, value of dout=%b",addr,WE,dout,$time);
+        $display("==================");
+      end
+  endtask
+endclass
