@@ -1,0 +1,53 @@
+`include "packet"
+`include "generator"
+`include "driver"
+`include "interface_"
+`include "monitor"
+`include "reference"
+`include "scoreboard"
+
+class environment;
+  packet pack;
+  generator gen;
+  driver dri;
+  virtual intf vif;
+  monitor mon;
+  scoreboard sco;
+  reference refe;
+  mailbox gen2drive;
+  mailbox mon2ref;
+  mailbox ref2sco;
+  
+  function new(virtual intf vif);
+    this.vif=vif;
+
+    
+  endfunction
+  
+  task test;
+    begin
+      	gen2drive=new();
+    	mon2ref=new();
+    	ref2sco=new();
+    	gen=new(gen2drive);
+    	dri=new(vif,gen2drive);
+    	mon=new(vif,mon2ref);
+    	refe=new(vif,mon2ref,ref2sco);
+    	sco=new(mon2ref,ref2sco);
+    end
+    #3
+    repeat(5)
+    	fork
+      		gen.main();
+      		dri.main();
+      		refe.main();
+          	mon.main();	
+      		sco.main();
+    join
+  endtask
+  
+  task run;
+    test();
+    $finish;
+  endtask
+endclass
